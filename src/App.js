@@ -9,6 +9,7 @@ import { Card, CardContent, Typography } from '@material-ui/core';
 function App() {
   const [countries, setCountries] = useState([])
   const [country, setCountry] = useState('worldwide');
+  const [countryInfo, setCountryInfo] = useState({});
 
 
   // Getting all countries name for dropdown list
@@ -27,15 +28,25 @@ function App() {
     getCountriesData();
   }, []);
 
-  const onCountryChange = (event) => {
+  const onCountryChange = async (event) => {
     const countryCode = event.target.value;
-    //  console.log(countryCode);
 
-    setCountry(countryCode);
-  }
+    const url = countryCode === "worldwide"
+      ? "https://disease.sh/v3/covid-19/all"
+      : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+
+    await fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        setCountry(countryCode);
+        //  console.log(countryCode);
+        setCountryInfo(data);
+       
+      });
+  };
   return (
     <div className="app">
-hello
+      
       <div className="app__left">
         <div className="app__header">
           <h1>Covid-19 TRACKER</h1>
