@@ -35,7 +35,7 @@ function App() {
   }
   return (
     <div className="app">
-
+hello
       <div className="app__left">
         <div className="app__header">
           <h1>Covid-19 TRACKER</h1>
